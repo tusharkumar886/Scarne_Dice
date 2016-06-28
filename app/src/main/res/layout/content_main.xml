@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="64dp">
+        <TextView
+            android:id="@+id/yourScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Score:"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/compScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Computer's Score:"
+            android:textSize="15sp"
+            android:layout_marginLeft="16dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/diceImage"
+        android:src="@drawable/dice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp">
+        <Button
+            android:onClick="rollDice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Roll"/>
+
+        <Button
+            android:onClick="holdDice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hold"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/gameStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30sp"
+        android:layout_margin="32dp"
+        android:text="Hi!"/>
+
+</LinearLayout>
