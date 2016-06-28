@@ -1,5 +1,6 @@
 package com.zattack.scarnesdice;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -53,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         int diceValue = r.nextInt(6)+1;
         String img = "dice" + Integer.toString(diceValue);
         int resourceId = this.getResources().getIdentifier(img, "drawable", getPackageName());
-        //Drawable drawable = getDrawable(resourceId);
+        Drawable d = getDrawable(resourceId);
         ImageView imageView = (ImageView)findViewById(R.id.diceImage);
-        imageView.setImageResource(resourceId);
+        imageView.setImageDrawable(d);
         return diceValue;
     }
 
