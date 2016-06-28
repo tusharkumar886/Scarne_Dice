@@ -55,6 +55,7 @@
             android:text="Hold"/>
 
         <Button
+            android:onClick="resetGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reset"/>

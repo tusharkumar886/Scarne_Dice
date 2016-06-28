@@ -72,6 +72,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void holdDice(View view){
         textView.setText("Hold Score");
-           
+        yourScore+=yourTurnScore;
+        yourTurnScore=0;
+        updateScore();
+    }
+
+    private void updateScore(){
+        TextView t1 = (TextView)findViewById(R.id.yourScore);
+        t1.setText("Your Score:"+yourScore);
+        TextView t2 = (TextView)findViewById(R.id.compScore);
+        t2.setText("Your Score:" + compScore);
+    }
+
+    public void resetGame(View view){
+        textView.setText("Game Reset");
+        yourScore = 0;
+        compScore = 0;
+        yourTurnScore = 0;
+        compTurnScore = 0;
+        updateScore();
     }
 }
