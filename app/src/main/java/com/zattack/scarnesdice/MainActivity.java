@@ -14,7 +14,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -67,22 +67,24 @@ public class MainActivity extends AppCompatActivity {
             yourTurnScore+=value;
         }else {
             textView.setText("Rolled 1");
-            yourTurnScore=1;
+            yourTurnScore=0;
+            computerTurn();
         }
     }
 
-    public void holdDice(View view){
+    public void holdScore(View view){
         textView.setText("Hold Score");
         yourScore+=yourTurnScore;
         yourTurnScore=0;
         updateScore();
+        computerTurn();
     }
 
     private void updateScore(){
         TextView t1 = (TextView)findViewById(R.id.yourScore);
         t1.setText("Your Score:"+yourScore);
         TextView t2 = (TextView)findViewById(R.id.compScore);
-        t2.setText("Your Score:" + compScore);
+        t2.setText("Computer's Score:" + compScore);
     }
 
     public void resetGame(View view){
@@ -92,5 +94,25 @@ public class MainActivity extends AppCompatActivity {
         yourTurnScore = 0;
         compTurnScore = 0;
         updateScore();
+    }
+
+    public void computerTurn() {
+        textView.setText("Computer's Turn");
+        boolean flag = false;
+        int max_turn = r.nextInt(3)+2;
+        while(flag && max_turn > 0){
+            int value = getDiceValue();
+            if(value != 1){
+                textView.setText("Computer Rolled "+value);
+                compTurnScore += value;
+            }else {
+                compTurnScore = 0;
+                flag=true;
+            }
+        }
+        if(!flag){
+            compScore += compTurnScore;
+        }else
+            textView.setText("Computer Rolled 1");
     }
 }
