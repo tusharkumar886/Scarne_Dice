@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,20 +14,12 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    public static int yourScore = 0;
-    public static int compScore = 0;
-    public static int yourTurnScore = 0;
-    public static int compTurnScore = 0;
-
-    TextView textView = (TextView)findViewById(R.id.gameStatus);
-
-    private Random r = new Random();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public static int yourScore = 0;
+    public static int compScore = 0;
+    public static int yourTurnScore = 0;
+    public static int compTurnScore = 0;
+
+    TextView textView = (TextView)findViewById(R.id.gameStatus);
+
+    private Random r = new Random();
 
     private int getDiceValue(){
         int diceValue = r.nextInt(6)+1;
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateScore(){
         TextView t1 = (TextView)findViewById(R.id.yourScore);
-        t1.setText("Your Score:"+yourScore);
+        t1.setText("Your Score:" + yourScore);
         TextView t2 = (TextView)findViewById(R.id.compScore);
         t2.setText("Computer's Score:" + compScore);
     }
@@ -97,22 +99,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void computerTurn() {
+        disableButtons();
         textView.setText("Computer's Turn");
         boolean flag = false;
-        int max_turn = r.nextInt(3)+2;
-        while(flag && max_turn > 0){
+        int max_turn = r.nextInt(3)+3;
+        while(!flag && max_turn > 0){
             int value = getDiceValue();
+            textView.setText("Computer Rolled "+value);
             if(value != 1){
-                textView.setText("Computer Rolled "+value);
                 compTurnScore += value;
             }else {
                 compTurnScore = 0;
                 flag=true;
             }
+            --max_turn;
         }
         if(!flag){
             compScore += compTurnScore;
         }else
             textView.setText("Computer Rolled 1");
+        enableButtons();
+    }
+
+    private void disableButtons(){
+        Button roll = (Button)findViewById(R.id.roll);
+        Button hold = (Button)findViewById(R.id.hold);
+        Button reset = (Button)findViewById(R.id.reset);
+        roll.setEnabled(false);
+        hold.setEnabled(false);
+        reset.setEnabled(false);
+    }
+
+    private void enableButtons(){
+        Button roll = (Button)findViewById(R.id.roll);
+        Button hold = (Button)findViewById(R.id.hold);
+        Button reset = (Button)findViewById(R.id.reset);
+        roll.setEnabled(true);
+        hold.setEnabled(true);
+        reset.setEnabled(true);
     }
 }

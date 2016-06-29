@@ -43,18 +43,21 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="16dp">
         <Button
+            android:id="@+id/roll"
             android:onClick="rollDice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Roll"/>
 
         <Button
+            android:id="@+id/hold"
             android:onClick="holdScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hold"/>
 
         <Button
+            android:id="@+id/reset"
             android:onClick="resetGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
