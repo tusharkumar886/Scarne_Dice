@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         Drawable d = getDrawable(resourceId);
         ImageView imageView = (ImageView)findViewById(R.id.diceImage);
         imageView.setImageDrawable(d);
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return diceValue;
     }
 
@@ -69,15 +75,15 @@ public class MainActivity extends AppCompatActivity {
             yourTurnScore+=value;
         }else {
             textView.setText("Rolled 1");
-            yourTurnScore=0;
+            yourTurnScore = 0;
             computerTurn();
         }
     }
 
     public void holdScore(View view){
         textView.setText("Hold Score");
-        yourScore+=yourTurnScore;
-        yourTurnScore=0;
+        yourScore += yourTurnScore;
+        yourTurnScore = 0;
         updateScore();
         computerTurn();
     }
@@ -102,22 +108,24 @@ public class MainActivity extends AppCompatActivity {
         disableButtons();
         textView.setText("Computer's Turn");
         boolean flag = false;
-        int max_turn = r.nextInt(3)+3;
-        while(!flag && max_turn > 0){
+
+        for(int max_turn = r.nextInt(3)+3;!flag && max_turn > 0;max_turn--){
             int value = getDiceValue();
-            textView.setText("Computer Rolled "+value);
+            textView.setText("Computer Rolled " + value);
             if(value != 1){
                 compTurnScore += value;
             }else {
-                compTurnScore = 0;
-                flag=true;
+                flag = true;
             }
-            --max_turn;
         }
         if(!flag){
             compScore += compTurnScore;
-        }else
+        }else {
+            compScore = 0;
             textView.setText("Computer Rolled 1");
+        }
+        compTurnScore = 0;
+        updateScore();
         enableButtons();
     }
 
