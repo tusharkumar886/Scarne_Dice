@@ -44,12 +44,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public static int yourScore = 0;
     public static int compScore = 0;
     public static int yourTurnScore = 0;
     public static int compTurnScore = 0;
-
-    TextView textView = (TextView)findViewById(R.id.gameStatus);
 
     private Random r = new Random();
 
@@ -57,31 +56,34 @@ public class MainActivity extends AppCompatActivity {
         int diceValue = r.nextInt(6)+1;
         String img = "dice" + Integer.toString(diceValue);
         int resourceId = this.getResources().getIdentifier(img, "drawable", getPackageName());
-        Drawable d = getDrawable(resourceId);
         ImageView imageView = (ImageView)findViewById(R.id.diceImage);
-        imageView.setImageDrawable(d);
+        imageView.setImageResource(resourceId);
         try {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return diceValue;
     }
 
-    public void rollDice(View view){
+    public void rollDice(View view) throws InterruptedException {
+        TextView textView = (TextView)findViewById(R.id.gameStatus);
         int value = getDiceValue();
-        textView.setText("Player Rolled" + value);
+        textView.setText("You Rolled " + value);
         if(value!=1){
             yourTurnScore+=value;
         }else {
-            textView.setText("Rolled 1");
+            textView.setText("You Rolled "+value);
+            TimeUnit.SECONDS.sleep(1);
             yourTurnScore = 0;
             computerTurn();
         }
     }
 
-    public void holdScore(View view){
+    public void holdScore(View view) throws InterruptedException {
+        TextView textView = (TextView)findViewById(R.id.gameStatus);
         textView.setText("Hold Score");
+        TimeUnit.SECONDS.sleep(1);
         yourScore += yourTurnScore;
         yourTurnScore = 0;
         updateScore();
@@ -93,9 +95,19 @@ public class MainActivity extends AppCompatActivity {
         t1.setText("Your Score:" + yourScore);
         TextView t2 = (TextView)findViewById(R.id.compScore);
         t2.setText("Computer's Score:" + compScore);
+        whoWon();
+    }
+
+    private void whoWon(){
+        TextView textView = (TextView)findViewById(R.id.gameStatus);
+        if(yourScore>=100)
+            textView.setText("You Win!");
+        else if(compScore>=100)
+            textView.setText("Computer Wins!");
     }
 
     public void resetGame(View view){
+        TextView textView = (TextView)findViewById(R.id.gameStatus);
         textView.setText("Game Reset");
         yourScore = 0;
         compScore = 0;
@@ -104,9 +116,12 @@ public class MainActivity extends AppCompatActivity {
         updateScore();
     }
 
-    public void computerTurn() {
+    public void computerTurn() throws InterruptedException {
+        TextView textView = (TextView)findViewById(R.id.gameStatus);
         disableButtons();
         textView.setText("Computer's Turn");
+        TimeUnit.SECONDS.sleep(1);
+
         boolean flag = false;
 
         for(int max_turn = r.nextInt(3)+3;!flag && max_turn > 0;max_turn--){
@@ -117,15 +132,21 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 flag = true;
             }
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         if(!flag){
             compScore += compTurnScore;
         }else {
-            compScore = 0;
+            compTurnScore = 0;
             textView.setText("Computer Rolled 1");
         }
         compTurnScore = 0;
         updateScore();
+        textView.setText("Your Turn");
         enableButtons();
     }
 
